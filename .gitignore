@@ -1,0 +1,11 @@
+# Banco de dados SQLite
+*.db
+*.sqlite
+
+# Arquivos temporários
+__pycache__/
+*.py[cod]
+
+# Ambiente virtual
+venv/
+.env
