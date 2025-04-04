@@ -5,7 +5,6 @@ import datetime
 import base64
 import os
 import urllib.parse as up
-import psycopg2
 
 if 'DATABASE_URL' in os.environ:
     up.uses_netloc.append("postgres")
