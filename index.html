@@ -339,16 +339,140 @@
 </head>
 <body>
     <!-- Tela de Boas-Vindas -->
-    <div id="welcome-screen" class="container">
-        <div class="welcome-container">
-            <h1 class="welcome-title">🍕 Bem-vindo ao Sistema de Vendas de Pizzas!</h1>
-            <div class="welcome-text">
-                <p>Gerencie seus pedidos, acompanhe vendas e controle estoque de forma eficiente.</p>
-                <p>Para acessar o sistema, faça login como administrador.</p>
-            </div>
-            <button id="access-admin" class="welcome-button">Acessar Painel Administrativo</button>
+    <!-- Tela de Boas-Vindas Modernizada -->
+<div id="welcome-screen" class="container">
+    <div class="welcome-container">
+        <div class="welcome-image-container">
+            <img src="/api/placeholder/150/150" alt="Logo de Pizza" class="pizza-logo">
+        </div>
+        <h1 class="welcome-title">Bem-vindo ao Sistema de Vendas de Pizzas!</h1>
+        <div class="welcome-text">
+            <p>Gerencie seus pedidos, acompanhe vendas e controle estoque de forma eficiente.</p>
+            <p>Para acessar o sistema, faça login como administrador.</p>
+        </div>
+        <button id="access-admin" class="welcome-button">Acessar Painel Administrativo</button>
+        
+        <div class="pizza-illustrations">
+            <div class="pizza-icon pizza-icon-1">🍕</div>
+            <div class="pizza-icon pizza-icon-2">🧀</div>
+            <div class="pizza-icon pizza-icon-3">🍅</div>
         </div>
     </div>
+</div>
+
+<style>
+    /* Estilos da tela de boas-vindas modernizada */
+    .welcome-container {
+        background: linear-gradient(135deg, #FFF5F0 0%, #FFEBE0 100%);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(255, 87, 51, 0.15);
+        padding: 40px;
+        margin: 60px auto;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        max-width: 800px;
+    }
+    
+    .welcome-image-container {
+        margin-bottom: 20px;
+    }
+    
+    .pizza-logo {
+        border-radius: 50%;
+        box-shadow: 0 5px 15px rgba(255, 87, 51, 0.2);
+        background-color: #FF5733;
+        padding: 15px;
+    }
+    
+    .welcome-title {
+        color: #FF5733;
+        font-size: 38px;
+        font-weight: bold;
+        margin-bottom: 25px;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    }
+    
+    .welcome-text {
+        font-size: 18px;
+        margin-bottom: 35px;
+        color: #444;
+        line-height: 1.6;
+    }
+    
+    .welcome-button {
+        background: linear-gradient(to right, #FF5733, #e04a2d);
+        color: white;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(255, 87, 51, 0.3);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .welcome-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(255, 87, 51, 0.4);
+    }
+    
+    .pizza-illustrations {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+    }
+    
+    .pizza-icon {
+        position: absolute;
+        font-size: 80px;
+        opacity: 0.1;
+        z-index: -1;
+    }
+    
+    .pizza-icon-1 {
+        top: 10%;
+        left: 5%;
+        transform: rotate(-20deg);
+    }
+    
+    .pizza-icon-2 {
+        bottom: 15%;
+        right: 8%;
+        transform: rotate(15deg);
+    }
+    
+    .pizza-icon-3 {
+        top: 60%;
+        left: 15%;
+        transform: rotate(40deg);
+    }
+    
+    /* Adicione uma animação sutil para os ícones */
+    @keyframes float {
+        0% { transform: translateY(0) rotate(0); }
+        50% { transform: translateY(-10px) rotate(5deg); }
+        100% { transform: translateY(0) rotate(0); }
+    }
+    
+    .pizza-icon-1 {
+        animation: float 8s ease-in-out infinite;
+    }
+    
+    .pizza-icon-2 {
+        animation: float 7s ease-in-out infinite 1s;
+    }
+    
+    .pizza-icon-3 {
+        animation: float 9s ease-in-out infinite 2s;
+    }
+</style>
 
     <!-- Tela de Login -->
     <div id="login-screen" class="container" style="display: none;">
