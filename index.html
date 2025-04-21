@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Vendas de Pizzas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Estilos para a tela de login */
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 500px;
+            margin: 50px auto;
+        }
+        
+        .login-title {
+            text-align: center;
+            color: #FF5733;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        .login-form button {
+            width: 100%;
+            background-color: #FF5733;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .login-form button:hover {
+            background-color: #e04a2d;
+        }
+        
+        /* Estilos para a tela de boas-vindas */
+        .welcome-container {
+            background-color: #FFF5F0;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        
+        .welcome-title {
+            color: #FF5733;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .welcome-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-button {
+            background-color: #FF5733;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .welcome-button:hover {
+            background-color: #e04a2d;
+        }
+        
+        /* Estilos para o painel principal */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .logout-button {
+            background-color: #FF5733;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            float: left;
+            margin-right: 20px;
+        }
+        
+        .sidebar h3 {
+            margin-top: 0;
+            color: #FF5733;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar li {
+            padding: 10px 0;
+            cursor: pointer;
+        }
+        
+        .sidebar li:hover {
+            color: #FF5733;
+        }
+        
+        .sidebar li.active {
+            font-weight: bold;
+            color: #FF5733;
+        }
+        
+        .main-content {
+            margin-left: 270px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        
+        /* Estilos para formulários */
+        .form-row {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .form-col {
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .form-col:first-child {
+            padding-left: 0;
+        }
+        
+        .form-col:last-child {
+            padding-right: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+        }
+        
+        .submit-button {
+            background-color: #FF5733;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .submit-button:hover {
+            background-color: #e04a2d;
+        }
+        
+        /* Estilos para tabelas e listas */
+        .order-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .order-info {
+            flex: 4;
+        }
+        
+        .order-actions {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .action-button {
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .edit-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        /* Estilos para métricas e resumos */
+        .metrics-row {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .metric-card {
+            flex: 1;
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin: 0 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .metric-card:first-child {
+            margin-left: 0;
+        }
+        
+        .metric-card:last-child {
+            margin-right: 0;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF5733;
+        }
+        
+        /* Estilos para abas */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid #FF5733;
+            color: #FF5733;
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Estilos para comprovantes */
+        .receipt-container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .receipt-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        
+        .download-button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .remove-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de Boas-Vindas -->
+    <div id="welcome-screen" class="container">
+        <div class="welcome-container">
+            <h1 class="welcome-title">🍕 Bem-vindo ao Sistema de Vendas de Pizzas!</h1>
+            <div class="welcome-text">
+                <p>Gerencie seus pedidos, acompanhe vendas e controle estoque de forma eficiente.</p>
+                <p>Para acessar o sistema, faça login como administrador.</p>
+            </div>
+            <button id="access-admin" class="welcome-button">Acessar Painel Administrativo</button>
+        </div>
+    </div>
+
+    <!-- Tela de Login -->
+    <div id="login-screen" class="container" style="display: none;">
+        <div class="login-container">
+            <h1 class="login-title">🍕 Sistema de Vendas de Pizzas</h1>
+            <div class="login-title">Acesso Administrativo</div>
+            
+            <div class="login-form">
+                <input type="text" id="username" placeholder="Usuário">
+                <input type="password" id="password" placeholder="Senha">
+                <button id="login-button">Entrar</button>
+                <p id="login-error" style="color: red; display: none;">Credenciais inválidas. Tente novamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painel Principal -->
+    <div id="main-app" class="container" style="display: none;">
+        <div class="header">
+            <h1>🍕 Sistema de Vendas de Pizzas</h1>
+            <button id="logout-button" class="logout-button">Sair</button>
+        </div>
+        
+        <div class="sidebar">
+            <h3>Menu</h3>
+            <ul>
+                <li id="menu-register" class="active">Registrar Pedido</li>
+                <li id="menu-orders">Visualizar Pedidos</li>
+                <li id="menu-cashflow">Fluxo de Caixa</li>
+                <li id="menu-receipts">Comprovantes</li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <!-- Seção Registrar Pedido -->
+            <div id="register-order" class="content-section">
+                <h2>📝 Novo Pedido</h2>
+                
+                <form id="order-form">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="seller-name">Vendedor</label>
+                                <input type="text" id="seller-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-method">Forma de Pagamento</label>
+                                <select id="payment-method">
+                                    <option value="Dinheiro">Dinheiro</option>
+                                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                    <option value="Cartão de Débito">Cartão de Débito</option>
+                                    <option value="PIX">PIX</option>
+                                    <option value="Transferência">Transferência</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="observations">Observações</label>
+                                <input type="text" id="observations">
+                            </div>
+                            <div class="form-group">
+                                <label for="receipt">Comprovante (opcional)</label>
+                                <input type="file" id="receipt">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="pickup-time">Horário de Retirada</label>
+                                <select id="pickup-time">
+                                    <option value="entre 9 e 10">entre 9 e 10</option>
+                                    <option value="entre 10 e 11">entre 10 e 11</option>
+                                    <option value="entre 11 e 12">entre 11 e 12</option>
+                                    <option value="entre 12 e 13">entre 12 e 13</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>Quantidade de Pizzas</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="frango-com">Frango COM cebola</label>
+                                <input type="number" id="frango-com" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="frango-sem">Frango SEM cebola</label>
+                                <input type="number" id="frango-sem" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="calabresa-com">Calabresa COM cebola</label>
+                                <input type="number" id="calabresa-com" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="calabresa-sem">Calabresa SEM cebola</label>
+                                <input type="number" id="calabresa-sem" min="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Valor Total</label>
+                        <div id="total-value" style="font-size: 24px; font-weight: bold;">R$ 0,00</div>
+                    </div>
+                    
+                    <h3>Status do Pedido</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="payment-checked"> Pagamento Conferido
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="delivered-seller"> Entregue ao Vendedor
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="delivered-customer"> Entregue ao Cliente
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Salvar Pedido</button>
+                </form>
+            </div>
+            
+            <!-- Seção Visualizar Pedidos -->
+            <div id="view-orders" class="content-section" style="display: none;">
+                <h2>📋 Pedidos Registrados</h2>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="seller-filter">Filtrar por vendedor</label>
+                            <select id="seller-filter">
+                                <option value="Todos">Todos</option>
+                                <option value="João">João</option>
+                                <option value="Maria">Maria</option>
+                                <option value="Carlos">Carlos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="status-filter">Filtrar por status</label>
+                            <select id="status-filter">
+                                <option value="Todos">Todos</option>
+                                <option value="Pago">Pago</option>
+                                <option value="Não Pago">Não Pago</option>
+                                <option value="Entregue ao Vendedor">Entregue ao Vendedor</option>
+                                <option value="Entregue ao Cliente">Entregue ao Cliente</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sort-option">Ordenar por</label>
+                    <select id="sort-option">
+                        <option value="Data (Mais Recente)">Data (Mais Recente)</option>
+                        <option value="Data (Mais Antigo)">Data (Mais Antigo)</option>
+                        <option value="Vendedor (A-Z)">Vendedor (A-Z)</option>
+                        <option value="Vendedor (Z-A)">Vendedor (Z-A)</option>
+                        <option value="Valor (Maior)">Valor (Maior)</option>
+                        <option value="Valor (Menor)">Valor (Menor)</option>
+                    </select>
+                </div>
+                
+                <div id="orders-list">
+                    <!-- Exemplo de card de pedido -->
+                    <div class="order-card">
+                        <div class="order-info">
+                            <p><strong>Vendedor:</strong> João | <strong>Data:</strong> 15/06/2023 10:30</p>
+                            <p><strong>Frango C/Cebola:</strong> 2 | <strong>Frango S/Cebola:</strong> 1</p>
+                            <p><strong>Calabresa C/Cebola:</strong> 3 | <strong>Calabresa S/Cebola:</strong> 0</p>
+                            <p><strong>Retirada:</strong> entre 10 e 11 | <strong>Valor Total:</strong> R$ 195,00</p>
+                            <p><strong>Forma de Pagamento:</strong> Cartão de Crédito</p>
+                            <p><strong>Status:</strong> ✅ Pago | 🚚 Vendedor</p>
+                        </div>
+                        <div class="order-actions">
+                            <button class="action-button edit-button">✏️ Editar</button>
+                            <button class="action-button delete-button">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <div class="order-card">
+                        <div class="order-info">
+                            <p><strong>Vendedor:</strong> Maria | <strong>Data:</strong> 14/06/2023 09:15</p>
+                            <p><strong>Frango C/Cebola:</strong> 1 | <strong>Frango S/Cebola:</strong> 2</p>
+                            <p><strong>Calabresa C/Cebola:</strong> 0 | <strong>Calabresa S/Cebola:</strong> 1</p>
+                            <p><strong>Retirada:</strong> entre 9 e 10 | <strong>Valor Total:</strong> R$ 125,00</p>
+                            <p><strong>Forma de Pagamento:</strong> PIX</p>
+                            <p><strong>Status:</strong> ✅ Pago | 🏠 Cliente</p>
+                        </div>
+                        <div class="order-actions">
+                            <button class="action-button edit-button">✏️ Editar</button>
+                            <button class="action-button delete-button">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Totais</h3>
+                <div class="metrics-row">
+                    <div class="metric-card">
+                        <p>Total de Vendas</p>
+                        <div class="metric-value">R$ 320,00</div>
+                    </div>
+                    <div class="metric-card">
+                        <p>Número de Pedidos</p>
+                        <div class="metric-value">2</div>
+                    </div>
+                    <div class="metric-card">
+                        <p>Média por Pedido</p>
+                        <div class="metric-value">R$ 160,00</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção Fluxo de Caixa -->
+            <div id="cash-flow" class="content-section" style="display: none;">
+                <h2>💰 Fluxo de Caixa</h2>
+                
+                <h3>Filtrar por Período</h3>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="start-date">Data Início</label>
+                            <input type="date" id="start-date">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="end-date">Data Fim</label>
+                            <input type="date" id="end-date">
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Resumo Financeiro</h3>
+                <div class="metrics-row">
+                    <div class="metric-card">
+                        <p>Total no Período</p>
+                        <div class="metric-value">R$ 320,00</div>
+                    </div>
+                    <div class="metric-card">
+                        <p>Média Diária</p>
+                        <div class="metric-value">R$ 160,00</div>
+                    </div>
+                </div>
+                
+                <h3>Visualizações</h3>
+                <div class="tabs">
+                    <div class="tab active" data-tab="daily">Evolução Diária</div>
+                    <div class="tab" data-tab="payment">Formas de Pagamento</div>
+                    <div class="tab" data-tab="details">Dados Detalhados</div>
+                </div>
+                
+                <div class="tab-content active" id="daily-tab">
+                    <p>Gráfico de evolução diária aqui...</p>
+                </div>
+                
+                <div class="tab-content" id="payment-tab">
+                    <p>Gráfico de formas de pagamento aqui...</p>
+                </div>
+                
+                <div class="tab-content" id="details-tab">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="padding: 8px; border: 1px solid #ddd;">Data</th>
+                                <th style="padding: 8px; border: 1px solid #ddd;">Forma de Pagamento</th>
+                                <th style="padding: 8px; border: 1px solid #ddd;">Total</th>
+                                <th style="padding: 8px; border: 1px solid #ddd;">Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd;">15/06/2023</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">Cartão de Crédito</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">R$ 195,00</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">1</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd;">14/06/2023</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">PIX</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">R$ 125,00</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>Exportar Dados</h3>
+                <button class="submit-button">Baixar como CSV</button>
+            </div>
+            
+            <!-- Seção Comprovantes -->
+            <div id="manage-receipts" class="content-section" style="display: none;">
+                <h2>🧾 Comprovantes de Venda</h2>
+                
+                <div class="form-group">
+                    <label for="order-select">Selecione um pedido para ver os comprovantes</label>
+                    <select id="order-select" style="width: 100%;">
+                        <option value="1">João - 15/06/2023 10:30</option>
+                        <option value="2">Maria - 14/06/2023 09:15</option>
+                    </select>
+                </div>
+                
+                <div style="margin: 20px 0; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+                    <h4>Detalhes do Pedido</h4>
+                    <p><strong>Vendedor:</strong> João</p>
+                    <p><strong>Data:</strong> 15/06/2023 10:30</p>
+                    <p><strong>Valor Total:</strong> R$ 195,00</p>
+                    <p><strong>Forma de Pagamento:</strong> Cartão de Crédito</p>
+                </div>
+                
+                <h3>Comprovantes Associados</h3>
+                <div class="receipt-container">
+                    <img src="https://via.placeholder.com/300x200?text=Comprovante" alt="Comprovante" class="receipt-image">
+                    <button class="download-button">Download comprovante.jpg</button>
+                    <button class="remove-button">Excluir comprovante.jpg</button>
+                </div>
+                
+                <h3>Adicionar Comprovante</h3>
+                <div class="form-group">
+                    <input type="file" id="new-receipt">
+                </div>
+                <button class="submit-button">Salvar Comprovante</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis de estado
+        let loggedIn = false;
+        let showLogin = false;
+        let currentMenu = "register";
+        
+        // Preços das pizzas
+        const prices = {
+            frangoComCebola: 30.0,
+            frangoSemCebola: 30.0,
+            calabresaComCebola: 35.0,
+            calabresaSemCebola: 35.0
+        };
+        
+        // Elementos da tela de boas-vindas
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const accessAdminBtn = document.getElementById('access-admin');
+        
+        // Elementos da tela de login
+        const loginScreen = document.getElementById('login-screen');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginButton = document.getElementById('login-button');
+        const loginError = document.getElementById('login-error');
+        
+        // Elementos do painel principal
+        const mainApp = document.getElementById('main-app');
+        const logoutButton = document.getElementById('logout-button');
+        
+        // Elementos do menu
+        const menuRegister = document.getElementById('menu-register');
+        const menuOrders = document.getElementById('menu-orders');
+        const menuCashflow = document.getElementById('menu-cashflow');
+        const menuReceipts = document.getElementById('menu-receipts');
+        
+        // Elementos das seções de conteúdo
+        const registerOrder = document.getElementById('register-order');
+        const viewOrders = document.getElementById('view-orders');
+        const cashFlow = document.getElementById('cash-flow');
+        const manageReceipts = document.getElementById('manage-receipts');
+        
+        // Elementos do formulário de pedido
+        const orderForm = document.getElementById('order-form');
+        const frangoComInput = document.getElementById('frango-com');
+        const frangoSemInput = document.getElementById('frango-sem');
+        const calabresaComInput = document.getElementById('calabresa-com');
+        const calabresaSemInput = document.getElementById('calabresa-sem');
+        const totalValue = document.getElementById('total-value');
+        
+        // Configurar eventos
+        accessAdminBtn.addEventListener('click', () => {
+            welcomeScreen.style.display = 'none';
+            loginScreen.style.display = 'block';
+            showLogin = true;
+        });
+        
+        loginButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+            
+            // Verificação simples de login (em um sistema real, isso seria feito no servidor)
+            if (username === 'admin' && password === 'pizza123') {
+                loggedIn = true;
+                loginScreen.style.display = 'none';
+                mainApp.style.display = 'block';
+            } else {
+                loginError.style.display = 'block';
+            }
+        });
+        
+        logoutButton.addEventListener('click', () => {
+            loggedIn = false;
+            showLogin = false;
+            mainApp.style.display = 'none';
+            loginScreen.style.display = 'none';
+            welcomeScreen.style.display = 'block';
+            
+            // Limpar campos de login
+            usernameInput.value = '';
+            passwordInput.value = '';
+            loginError.style.display = 'none';
+        });
+        
+        // Menu navigation
+        menuRegister.addEventListener('click', () => {
+            setActiveMenu('register');
+        });
+        
+        menuOrders.addEventListener('click', () => {
+            setActiveMenu('orders');
+        });
+        
+        menuCashflow.addEventListener('click', () => {
+            setActiveMenu('cashflow');
+        });
+        
+        menuReceipts.addEventListener('click', () => {
+            setActiveMenu('receipts');
+        });
+        
+        // Atualizar valor total quando as quantidades mudam
+        [frangoComInput, frangoSemInput, calabresaComInput, calabresaSemInput].forEach(input => {
+            input.addEventListener('change', updateTotalValue);
+            input.addEventListener('input', updateTotalValue);
+        });
+        
+        // Form submission
+        orderForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Pedido salvo com sucesso!');
+            // Aqui você normalmente enviaria os dados para o servidor
+        });
+        
+        // Tabs do fluxo de caixa
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Remover classe active de todas as tabs e conteúdos
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Adicionar classe active à tab clicada e ao conteúdo correspondente
+                tab.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // Funções auxiliares
+        function setActiveMenu(menu) {
+            currentMenu = menu;
+            
+            // Remover classe active de todos os itens do menu
+            menuRegister.classList.remove('active');
+            menuOrders.classList.remove('active');
+            menuCashflow.classList.remove('active');
+            menuReceipts.classList.remove('active');
+            
+            // Esconder todas as seções de conteúdo
+            registerOrder.style.display = 'none';
+            viewOrders.style.display = 'none';
+            cashFlow.style.display = 'none';
+            manageReceipts.style.display = 'none';
+            
+            // Ativar o item do menu e a seção de conteúdo correspondente
+            switch(menu) {
+                case 'register':
+                    menuRegister.classList.add('active');
+                    registerOrder.style.display = 'block';
+                    break;
+                case 'orders':
+                    menuOrders.classList.add('active');
+                    viewOrders.style.display = 'block';
+                    break;
+                case 'cashflow':
+                    menuCashflow.classList.add('active');
+                    cashFlow.style.display = 'block';
+                    break;
+                case 'receipts':
+                    menuReceipts.classList.add('active');
+                    manageReceipts.style.display = 'block';
+                    break;
+            }
+        }
+        
+        function updateTotalValue() {
+            const frangoCom = parseInt(frangoComInput.value) || 0;
+            const frangoSem = parseInt(frangoSemInput.value) || 0;
+            const calabresaCom = parseInt(calabresaComInput.value) || 0;
+            const calabresaSem = parseInt(calabresaSemInput.value) || 0;
+            
+            const total = (
+                frangoCom * prices.frangoComCebola +
+                frangoSem * prices.frangoSemCebola +
+                calabresaCom * prices.calabresaComCebola +
+                calabresaSem * prices.calabresaSemCebola
+            );
+            
+            totalValue.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+        
+        // Inicializar
+        updateTotalValue();
+    </script>
+</body>
+</html>
